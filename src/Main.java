@@ -1,65 +1,71 @@
 import java.util.Arrays;
-import java.util.Random;
-import java.util.HashMap;
 
 public class Main {
+	public static void main(String[] args) {
+				int[][] board = {
+		    {5, 3, 0, 0, 7, 0, 0, 0, 0},
+		    {6, 0, 0, 1, 9, 5, 0, 0, 0},
+		    {0, 9, 8, 0, 0, 0, 0, 6, 0},
+		    {8, 0, 0, 0, 6, 0, 0, 0, 3},
+		    {4, 0, 0, 8, 0, 3, 0, 0, 1},
+		    {7, 0, 0, 0, 2, 0, 0, 0, 6},
+		    {0, 6, 0, 0, 0, 0, 2, 8, 0},
+		    {0, 0, 0, 4, 1, 9, 0, 0, 5},
+		    {0, 0, 0, 0, 8, 0, 0, 7, 9}
+		};
+		boardSolved(board);
+		System.out.println(Arrays.deepToString(board));
+	}
 
-	static boolean solvingAlgorithm(int[][] boardArray) {
-		final int SUM_COLUMNROW_CHECK = 405;
-		final int SUM_BOX_CHECK = 45;
+	public static boolean isNumberInBox(int board[][], int number, int row, int col) {
 
-		int rowCheck = 0;
-		int columnCheck = 0;
-		int boxCheck = 0;
+		int localRowBox = row - (row % 3);
+		int localColBox = col - (col % 3);
 
-		boolean algStatus = true;
-			
-		
-
-		//row check
-		for (int row = 0; row < 9; row++) {
-			for (int column = 0; column < 9; column++) {
-				rowCheck = Arrays.stream(boardArray[row]).sum();
-				algStatus = (rowCheck == SUM_COLUMNROW_CHECK) ? true : false;
-			}
-		}
-
-		//column check
-		for (int row = 0; row < 9; row++) {
-			for (int column = 0; column < 9; column++) {
-				columnCheck += boardArray[column][row];
-				algStatus = (columnCheck == SUM_COLUMNROW_CHECK) ? true : false;
-			}
-		}
-
-		//box check
-		for (int i = 1; i < 10; i++) {
-			for (int boxRow = 0; (boxRow) < (3); boxRow++) {
-				for (int boxColumn = 0; (boxColumn) < (3) ; boxColumn++) {
-					boxCheck += boardArray[boxRow][boxColumn];
-					
+		for (int rowX = localRowBox; rowX < (localRowBox + 3); rowX++) {
+			for (int colX = localColBox; colX < (localColBox + 3); colX++) {
+				if (board[rowX][colX] == number) {
+					return true;
 				}
 			}
 		}
-
-		if (algStatus == true)
-			return true;
-		else
-			return false;
+		return false;
 	}
 
-	public static void main (String[] args) {
-		int[][] boardArray = {
-							    {5, 3, 4, 6, 7, 8, 9, 1, 2},
-							    {6, 7, 2, 1, 9, 5, 3, 4, 8},
-							    {1, 9, 8, 3, 4, 2, 5, 6, 7},
-							    {8, 5, 9, 7, 6, 1, 4, 2, 3},
-							    {4, 2, 6, 8, 5, 3, 7, 9, 1},
-							    {7, 1, 3, 9, 2, 4, 8, 5, 6},
-							    {9, 6, 1, 5, 3, 7, 2, 8, 4},
-							    {2, 8, 7, 4, 1, 9, 6, 3, 5},
-							    {3, 4, 5, 2, 8, 6, 1, 7, 9}
-							};
-		System.out.println(solvingAlgorithm(boardArray));
+	public static boolean isNumberInRow(int board[][], int number, int row) {
+		for (int colIterable = 0; colIterable < 9; colIterable++) {
+			if (board[row][colIterable] == number) {
+				return true;
+			}
+		}
+		return false;
 	}
-}	
+
+	public static boolean isNumberInCol(int board[][], int number, int col) {
+		for (int rowIterable = 0; rowIterable < 9; rowIterable++) {
+			if (board[rowIterable][col] == number) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean doesNumberWork (int[][] board, int number, int row, int col) {
+		return (! (isNumberInRow(board, number, row) || isNumberInCol(board, number, col) || isNumberInBox(board, number, row, col))); 
+	}
+
+	public static boolean boardSolved(int board[][]) {
+		
+	}
+
+
+
+
+
+
+
+
+
+
+
+}
